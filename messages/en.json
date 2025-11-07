@@ -3,10 +3,7 @@
     "title": "Live Website with AI",
     "description": "AI-powered website builder with Puck Editor and Google Gemini"
   },
-  "home": {
-    "heading": "Live Website with AI",
-    "subtitle": "AI-powered website builder with Puck Editor and Google Gemini"
-  },
+  "home": {},
   "chat": {
     "placeholder": "Type a message...",
     "send": "Send",
