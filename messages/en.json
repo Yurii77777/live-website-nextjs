@@ -1,12 +1,17 @@
 {
   "common": {
     "title": "Live Website with AI",
-    "description": "AI-powered website builder with Puck Editor and Google Gemini"
+    "description": "AI-powered website builder with Puck Editor and Google Gemini",
+    "language": "Language"
   },
   "home": {},
   "chat": {
     "placeholder": "Type a message...",
     "send": "Send",
     "startConversation": "Start conversation..."
+  },
+  "languages": {
+    "en": "ENG",
+    "uk": "UA"
   }
 }

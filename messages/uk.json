@@ -1,12 +1,17 @@
 {
   "common": {
     "title": "Живий сайт з AI",
-    "description": "Конструктор сайтів на основі AI з Puck Editor та Google Gemini"
+    "description": "Конструктор сайтів на основі AI з Puck Editor та Google Gemini",
+    "language": "Мова"
   },
   "home": {},
   "chat": {
     "placeholder": "Введіть повідомлення...",
     "send": "Надіслати",
     "startConversation": "Почніть розмову..."
+  },
+  "languages": {
+    "en": "ENG",
+    "uk": "UA"
   }
 }
