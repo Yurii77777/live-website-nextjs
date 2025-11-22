@@ -2,7 +2,8 @@
   "common": {
     "title": "Live Website with AI",
     "description": "AI-powered website builder with Puck Editor and Google Gemini",
-    "language": "Language"
+    "language": "Language",
+    "pageNotFound": "Page Not Found"
   },
   "home": {},
   "chat": {
@@ -13,5 +14,42 @@
   "languages": {
     "en": "ENG",
     "uk": "UA"
+  },
+  "admin": {
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "createNewPage": "Create New Page",
+      "loading": "Loading...",
+      "noPages": "No pages yet. Create your first page!",
+      "published": "Published",
+      "draft": "Draft",
+      "updated": "Updated",
+      "edit": "Edit",
+      "preview": "Preview",
+      "delete": "Delete",
+      "deleteConfirm": "Are you sure you want to delete \"{slug}\"?"
+    },
+    "createPage": {
+      "title": "Create New Page",
+      "pageTitle": "Page Title",
+      "pageTitlePlaceholder": "My Page",
+      "slug": "Slug (URL)",
+      "slugPlaceholder": "my-page",
+      "slugHint": "Only lowercase letters, numbers, and hyphens",
+      "cancel": "Cancel",
+      "create": "Create Page"
+    },
+    "messages": {
+      "pageCreated": "Page created successfully!",
+      "pageDeleted": "Page deleted successfully!",
+      "pageSaved": "Page saved successfully!",
+      "loadFailed": "Failed to load pages",
+      "createFailed": "Failed to create page",
+      "deleteFailed": "Failed to delete page",
+      "saveFailed": "Failed to save page",
+      "fillAllFields": "Please fill in all fields",
+      "invalidSlug": "Slug can only contain lowercase letters, numbers, and hyphens",
+      "backToPages": "Back to Pages"
+    }
   }
 }
