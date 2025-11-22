@@ -1,15 +1,55 @@
 {
   "common": {
     "title": "Живий сайт з AI",
-    "description": "Конструктор сайтів на основі AI з Puck Editor та Google Gemini"
+    "description": "Конструктор сайтів на основі AI з Puck Editor та Google Gemini",
+    "language": "Мова",
+    "pageNotFound": "Сторінку не знайдено"
   },
-  "home": {
-    "heading": "Живий сайт з AI",
-    "subtitle": "Конструктор сайтів на основі AI з Puck Editor та Google Gemini"
-  },
+  "home": {},
   "chat": {
     "placeholder": "Введіть повідомлення...",
     "send": "Надіслати",
     "startConversation": "Почніть розмову..."
+  },
+  "languages": {
+    "en": "ENG",
+    "uk": "UA"
+  },
+  "admin": {
+    "dashboard": {
+      "title": "Панель адміністратора",
+      "createNewPage": "Створити нову сторінку",
+      "loading": "Завантаження...",
+      "noPages": "Сторінок ще немає. Створіть свою першу сторінку!",
+      "published": "Опубліковано",
+      "draft": "Чернетка",
+      "updated": "Оновлено",
+      "edit": "Редагувати",
+      "preview": "Попередній перегляд",
+      "delete": "Видалити",
+      "deleteConfirm": "Ви впевнені, що хочете видалити \"{slug}\"?"
+    },
+    "createPage": {
+      "title": "Створити нову сторінку",
+      "pageTitle": "Назва сторінки",
+      "pageTitlePlaceholder": "Моя сторінка",
+      "slug": "Slug (URL)",
+      "slugPlaceholder": "moya-storinka",
+      "slugHint": "Тільки малі літери, цифри та дефіси",
+      "cancel": "Скасувати",
+      "create": "Створити сторінку"
+    },
+    "messages": {
+      "pageCreated": "Сторінку успішно створено!",
+      "pageDeleted": "Сторінку успішно видалено!",
+      "pageSaved": "Сторінку успішно збережено!",
+      "loadFailed": "Не вдалося завантажити сторінки",
+      "createFailed": "Не вдалося створити сторінку",
+      "deleteFailed": "Не вдалося видалити сторінку",
+      "saveFailed": "Не вдалося зберегти сторінку",
+      "fillAllFields": "Будь ласка, заповніть всі поля",
+      "invalidSlug": "Slug може містити тільки малі літери, цифри та дефіси",
+      "backToPages": "Назад до сторінок"
+    }
   }
 }

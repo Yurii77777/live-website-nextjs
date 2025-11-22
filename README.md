@@ -14,6 +14,15 @@ AI‑powered website builder using Vercel AI SDK 5, multi‑provider models (Ope
 
 ## Getting Started
 
+### Quick Access
+
+After setup, you'll have access to:
+
+- **App**: [http://localhost:3000](http://localhost:3000)
+- **Admin Panel**: [http://localhost:3000/uk/admin](http://localhost:3000/uk/admin)
+- **Database UI (Adminer)**: [http://localhost:8080](http://localhost:8080) (postgres/postgres)
+- **UI Kit**: [http://localhost:3000/uk/p/ui-kit](http://localhost:3000/uk/p/ui-kit)
+
 ### 1. Install dependencies
 
 ```bash
@@ -79,7 +88,60 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser.
 
+## Admin Panel & Database Access
+
+### Admin Dashboard
+
+Access the admin panel to manage pages:
+
+- **URL**: [http://localhost:3000/uk/admin](http://localhost:3000/uk/admin) or [http://localhost:3000/en/admin](http://localhost:3000/en/admin)
+- Create, edit, delete pages using Puck Editor
+- Preview pages before publishing
+
+### Puck Editor
+
+Edit pages visually with drag-and-drop UI components:
+
+- **URL**: `http://localhost:3000/uk/admin/editor/{slug}`
+- Example: [http://localhost:3000/uk/admin/editor/ui-kit](http://localhost:3000/uk/admin/editor/ui-kit)
+
+### UI Kit Demo Page
+
+Auto-generated page showcasing all UI components:
+
+- **View**: [http://localhost:3000/uk/p/ui-kit](http://localhost:3000/uk/p/ui-kit)
+- **Edit**: [http://localhost:3000/uk/admin/editor/ui-kit](http://localhost:3000/uk/admin/editor/ui-kit)
+- Regenerate: `npm run seed:ui-kit`
+
+### Database Web Interface (Adminer)
+
+Access PostgreSQL database via web browser:
+
+- **URL**: [http://localhost:8080](http://localhost:8080)
+- **System**: PostgreSQL
+- **Server**: `postgres`
+- **Username**: `postgres`
+- **Password**: `postgres`
+- **Database**: `live_website`
+
+Adminer starts automatically with `docker-compose up -d`.
+
 ## Database Management
+
+### Seed Scripts
+
+```bash
+# Seed all (knowledge base + UI kit)
+npm run seed:all
+
+# Seed knowledge base only
+npm run seed:knowledge
+
+# Seed UI kit page only
+npm run seed:ui-kit
+```
+
+**Note**: `npm run dev` automatically runs all seeds on startup.
 
 ### Prisma Studio
 

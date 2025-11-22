@@ -1,0 +1,7 @@
+[class*="Sidebar--right"],
+[class*="Sidebar_"][class*="--right"] {
+  height: 100vh !important;
+  max-height: 100vh !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
