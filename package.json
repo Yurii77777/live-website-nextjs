@@ -14,9 +14,17 @@
     "seed:knowledge": "./scripts/start-db.sh && tsx scripts/seed-knowledge-base.ts",
     "seed:ui-kit": "./scripts/start-db.sh && tsx scripts/seed-ui-kit.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["nextjs", "ai", "puck-editor", "vercel-ai-sdk", "pgvector", "postgresql"],
+  "author": {
+    "name": "Magic WebLab",
+    "email": "contact@magic-weblab.com.ua",
+    "url": "https://magic-weblab.com.ua"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yurii77777/live-website-nextjs"
+  },
   "dependencies": {
     "@ai-sdk/google": "^2.0.26",
     "@ai-sdk/openai": "^2.0.0",
