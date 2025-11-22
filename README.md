@@ -204,7 +204,36 @@ docker-compose down
 
 ## Troubleshooting
 
-- “Unsupported model version v1”: upgrade to `@ai-sdk/openai@^2` and reseed embeddings.
-- “Vectors must have the same length”: your DB contains embeddings from a different model/dimension. Reseed the KB.
+- "Unsupported model version v1": upgrade to `@ai-sdk/openai@^2` and reseed embeddings.
+- "Vectors must have the same length": your DB contains embeddings from a different model/dimension. Reseed the KB.
 - No KB results: check `[kb]` logs, ensure `AI_CONFIG.similarityThreshold` and `topK` are configured, and reseed.
-- English replies on `/uk`: ensure locale detection (referer path) is working and that your browser doesn’t force `Accept-Language: en` on API calls.
+- English replies on `/uk`: ensure locale detection (referer path) is working and that your browser doesn't force `Accept-Language: en` on API calls.
+
+## License
+
+This project is licensed under the MIT License with Attribution Requirement.
+
+**You are free to use this software for private or commercial purposes, provided that you include public attribution to the original author.**
+
+### Required Attribution
+
+Any use of this software must include visible attribution to:
+
+- **Author**: Magic WebLab
+- **Website**: [https://magic-weblab.com.ua](https://magic-weblab.com.ua)
+- **Telegram**: [@Yurets7777](https://t.me/Yurets7777)
+
+The attribution must be placed in a location visible to end users, such as:
+- Application footer, about page, or credits section
+- Project documentation or README
+- Any other end-user visible location
+
+See the [LICENSE](LICENSE) file for full details.
+
+## Author
+
+Created with love by **Magic WebLab**
+
+- Website: [https://magic-weblab.com.ua](https://magic-weblab.com.ua)
+- Telegram: [@Yurets7777](https://t.me/Yurets7777)
+- GitHub: [@Yurii77777](https://github.com/Yurii77777)
