@@ -1,8 +1,11 @@
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/prisma";
+import { pageService } from "@/services/db/page.service";
 import { PuckRenderer } from "@/components/puck-renderer";
 import type { Metadata } from "next";
 import { generatePageMetadata } from "@/lib/metadata";
+import { db } from "@/lib/db";
+import { pages } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 
 interface PageProps {
   params: Promise<{
@@ -11,7 +14,6 @@ interface PageProps {
   }>;
 }
 
-// Generate metadata for SEO
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -19,25 +21,21 @@ export async function generateMetadata({
   return generatePageMetadata(locale, slug);
 }
 
-// Generate static params for published pages (optional - for static generation)
 export async function generateStaticParams() {
-  const pages = await prisma.page.findMany({
-    where: { published: true },
-    select: { slug: true },
-  });
+  const publishedPages = await db
+    .select({ slug: pages.slug })
+    .from(pages)
+    .where(eq(pages.published, true));
 
-  return pages.map((page) => ({
+  return publishedPages.map((page) => ({
     slug: page.slug,
   }));
 }
 
-// Main page component with SSR
 export default async function PublicPage({ params }: PageProps) {
   const { slug } = await params;
 
-  const page = await prisma.page.findUnique({
-    where: { slug },
-  });
+  const page = await pageService.findBySlug(slug);
 
   // If page doesn't exist or is not published, show 404
   if (!page || !page.published) {

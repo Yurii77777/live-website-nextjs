@@ -10,6 +10,7 @@ import { Page } from "@/models/page.model";
 import { puckService } from "@/services/puck.service";
 import { ROUTES } from "@/constants/routes";
 import { QUERY_KEYS } from "@/constants/query-keys";
+import { PROTECTED_PAGES } from "@/constants/pages";
 import { showToast } from "@/lib/toast";
 import { translateError } from "@/helpers/translate-error";
 
@@ -125,7 +126,7 @@ export default function AdminDashboard() {
                   >
                     {t("preview")}
                   </Button>
-                  {page.slug !== "ui-kit" && (
+                  {!PROTECTED_PAGES.includes(page.slug as any) && (
                     <Button
                       variant="ghost"
                       size="sm"

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { pageService } from "@/services/db/page.service";
+import { PROTECTED_PAGES } from "@/constants/pages";
 
 import { PuckParams } from "@/app/api/types/puck.types";
 
@@ -7,12 +8,9 @@ export async function GET(req: NextRequest, { params }: PuckParams) {
   try {
     const { slug } = await params;
 
-    const page = await prisma.page.findUnique({
-      where: { slug },
-    });
+    const page = await pageService.findBySlug(slug);
 
     if (!page) {
-      // Return empty data if the page doesn't exist
       return NextResponse.json({
         content: [],
         root: {},
@@ -30,19 +28,10 @@ export async function PUT(req: NextRequest, { params }: PuckParams) {
     const { slug } = await params;
     const data = await req.json();
 
-    // Upsert: create a new or update an existing page
-    const page = await prisma.page.upsert({
-      where: { slug },
-      update: {
-        content: data,
-        updatedAt: new Date(),
-      },
-      create: {
-        slug,
-        title: `${slug} configuration`,
-        content: data,
-        published: true,
-      },
+    const page = await pageService.upsert(slug, {
+      content: data,
+      title: `${slug} configuration`,
+      published: true,
     });
 
     return NextResponse.json({ success: true, page });
@@ -55,9 +44,14 @@ export async function DELETE(req: NextRequest, { params }: PuckParams) {
   try {
     const { slug } = await params;
 
-    await prisma.page.delete({
-      where: { slug },
-    });
+    if (PROTECTED_PAGES.includes(slug as any)) {
+      return NextResponse.json(
+        { error: "Cannot delete protected page" },
+        { status: 403 }
+      );
+    }
+
+    await pageService.delete(slug);
 
     return NextResponse.json({ success: true });
   } catch (error) {

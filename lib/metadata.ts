@@ -1,23 +1,14 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { prisma } from "./prisma";
+import { pageService } from "@/services/db/page.service";
 
-/**
- * Generate metadata for a page by slug
- * @param locale - The locale string (e.g., 'en', 'uk')
- * @param slug - The page slug
- * @returns Metadata object for the page
- */
 export async function generatePageMetadata(
   locale: string,
   slug: string
 ): Promise<Metadata> {
   const t = await getTranslations({ locale });
 
-  const page = await prisma.page.findUnique({
-    where: { slug },
-    select: { title: true },
-  });
+  const page = await pageService.findBySlug(slug);
 
   if (!page) {
     return {

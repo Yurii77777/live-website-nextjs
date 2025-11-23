@@ -1,4 +1,4 @@
-import { streamText, convertToModelMessages } from "ai";
+import { streamText, convertToModelMessages, type UIMessage } from "ai";
 import { model } from "@/lib/ai";
 import { getRelevantContext } from "@/lib/vector-search";
 import { AI_SYSTEM_PROMPTS, AI_CONFIG } from "@/constants/ai";
@@ -23,21 +23,17 @@ function detectLocale(req: Request): "uk" | "en" {
 }
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages }: { messages: Array<Omit<UIMessage, "id">> } =
+    await req.json();
 
   const lastMessage = messages[messages.length - 1];
   // Extract plain text from the last user message for vector search
   let lastUserText = "";
-  if (lastMessage) {
-    if (Array.isArray(lastMessage.parts)) {
-      lastUserText = lastMessage.parts
-        .map((p: any) => (p && p.type === "text" ? p.text : ""))
-        .join("");
-    } else if (typeof lastMessage.content === "string") {
-      lastUserText = lastMessage.content;
-    } else if (typeof (lastMessage as any).text === "string") {
-      lastUserText = (lastMessage as any).text;
-    }
+  if (lastMessage?.parts) {
+    lastUserText = lastMessage.parts
+      .filter((p) => p.type === "text")
+      .map((p) => ("text" in p ? p.text : ""))
+      .join("");
   }
   const context = await getRelevantContext(lastUserText);
 
@@ -47,7 +43,7 @@ export async function POST(req: Request) {
   const result = streamText({
     model,
     system: systemPrompt,
-    messages: convertToModelMessages(messages as any),
+    messages: convertToModelMessages(messages),
   });
 
   return result.toUIMessageStreamResponse();

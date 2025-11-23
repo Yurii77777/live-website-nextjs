@@ -37,3 +37,6 @@ next-env.d.ts
 # Prisma
 /app/generated/prisma
 prisma/migrations
+
+# Drizzle
+/drizzle
