@@ -4,6 +4,8 @@ import { Link } from "@/components/ui/link";
 import { Heading } from "@/components/ui/heading";
 import { Paragraph } from "@/components/ui/paragraph";
 import { Icon } from "@/components/ui/icon";
+import { HeroTwoColumn } from "@/components/ui/hero-two-column";
+import { HeroFlexibleGrid } from "@/components/ui/hero-flexible-grid";
 
 type Props = {
   Button: {
@@ -61,6 +63,31 @@ type Props = {
     size?: number;
     className?: string;
   };
+  HeroTwoColumn: {
+    id?: string;
+    leftColumn: any[];
+    rightColumn: any[];
+    spacing?: "none" | "sm" | "md" | "lg" | "xl";
+    padding?: "none" | "sm" | "md" | "lg" | "xl";
+    columns?: "1-1" | "2-1" | "1-2";
+    className?: string;
+    containerClassName?: string;
+  };
+  HeroFlexibleGrid: {
+    id?: string;
+    leftColumnRows?: "1" | "2";
+    rightColumnRows?: "1" | "2";
+    leftColumnTop: any[];
+    leftColumnBottom: any[];
+    rightColumnTop: any[];
+    rightColumnBottom: any[];
+    spacing?: "none" | "sm" | "md" | "lg" | "xl";
+    padding?: "none" | "sm" | "md" | "lg" | "xl";
+    rowSpacing?: "none" | "sm" | "md" | "lg" | "xl";
+    columns?: "1-1" | "2-1" | "1-2";
+    className?: string;
+    containerClassName?: string;
+  };
 };
 
 export const config: Config<Props> = {
@@ -116,10 +143,14 @@ export const config: Config<Props> = {
             { label: "Unstyled", value: "unstyled" },
           ],
         },
-        asButton: { type: "radio", label: "As Button", options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
-        ] },
+        asButton: {
+          type: "radio",
+          label: "As Button",
+          options: [
+            { label: "Yes", value: true },
+            { label: "No", value: false },
+          ],
+        },
         buttonVariant: {
           type: "select",
           label: "Button Variant",
@@ -148,7 +179,15 @@ export const config: Config<Props> = {
         asButton: false,
         className: "",
       },
-      render: ({ href, text, variant, asButton, buttonVariant, buttonSize, className }) => {
+      render: ({
+        href,
+        text,
+        variant,
+        asButton,
+        buttonVariant,
+        buttonSize,
+        className,
+      }) => {
         return (
           <Link
             href={href}
@@ -213,7 +252,12 @@ export const config: Config<Props> = {
       },
       render: ({ text, variant, align, as, className }) => {
         return (
-          <Heading variant={variant} align={align} as={as} className={className}>
+          <Heading
+            variant={variant}
+            align={align}
+            as={as}
+            className={className}
+          >
             {text}
           </Heading>
         );
@@ -263,7 +307,12 @@ export const config: Config<Props> = {
       },
       render: ({ text, variant, align, as, className }) => {
         return (
-          <Paragraph variant={variant} align={align} as={as} className={className}>
+          <Paragraph
+            variant={variant}
+            align={align}
+            as={as}
+            className={className}
+          >
             {text}
           </Paragraph>
         );
@@ -310,7 +359,220 @@ export const config: Config<Props> = {
         className: "",
       },
       render: ({ name, variant, size, className }) => {
-        return <Icon name={name} variant={variant} size={size} className={className} />;
+        return (
+          <Icon
+            name={name}
+            variant={variant}
+            size={size}
+            className={className}
+          />
+        );
+      },
+    },
+    HeroTwoColumn: {
+      fields: {
+        leftColumn: {
+          type: "slot",
+          label: "Left Column",
+        },
+        rightColumn: {
+          type: "slot",
+          label: "Right Column",
+        },
+        spacing: {
+          type: "select",
+          label: "Column Spacing",
+          options: [
+            { label: "None", value: "none" },
+            { label: "Small", value: "sm" },
+            { label: "Medium", value: "md" },
+            { label: "Large", value: "lg" },
+            { label: "Extra Large", value: "xl" },
+          ],
+        },
+        padding: {
+          type: "select",
+          label: "Padding",
+          options: [
+            { label: "None", value: "none" },
+            { label: "Small", value: "sm" },
+            { label: "Medium", value: "md" },
+            { label: "Large", value: "lg" },
+            { label: "Extra Large", value: "xl" },
+          ],
+        },
+        columns: {
+          type: "radio",
+          label: "Column Ratio",
+          options: [
+            { label: "Equal (1:1)", value: "1-1" },
+            { label: "Left Wider (2:1)", value: "2-1" },
+            { label: "Right Wider (1:2)", value: "1-2" },
+          ],
+        },
+        className: { type: "text", label: "Custom Classes (Tailwind)" },
+        containerClassName: {
+          type: "text",
+          label: "Container Classes (Tailwind)",
+        },
+      },
+      defaultProps: {
+        leftColumn: [],
+        rightColumn: [],
+        spacing: "lg",
+        padding: "md",
+        columns: "1-1",
+        className: "",
+        containerClassName: "",
+      },
+      render: ({
+        leftColumn: LeftColumn,
+        rightColumn: RightColumn,
+        spacing,
+        padding,
+        columns,
+        className,
+        containerClassName,
+      }) => {
+        return (
+          <HeroTwoColumn
+            leftColumn={<LeftColumn />}
+            rightColumn={<RightColumn />}
+            spacing={spacing}
+            padding={padding}
+            columns={columns}
+            className={className}
+            containerClassName={containerClassName}
+          />
+        );
+      },
+    },
+    HeroFlexibleGrid: {
+      fields: {
+        leftColumnRows: {
+          type: "radio",
+          label: "Left Column Rows",
+          options: [
+            { label: "1 Row", value: "1" },
+            { label: "2 Rows", value: "2" },
+          ],
+        },
+        rightColumnRows: {
+          type: "radio",
+          label: "Right Column Rows",
+          options: [
+            { label: "1 Row", value: "1" },
+            { label: "2 Rows", value: "2" },
+          ],
+        },
+        leftColumnTop: {
+          type: "slot",
+          label: "Left Column - Top Row",
+        },
+        leftColumnBottom: {
+          type: "slot",
+          label: "Left Column - Bottom Row",
+        },
+        rightColumnTop: {
+          type: "slot",
+          label: "Right Column - Top Row",
+        },
+        rightColumnBottom: {
+          type: "slot",
+          label: "Right Column - Bottom Row",
+        },
+        spacing: {
+          type: "select",
+          label: "Column Spacing",
+          options: [
+            { label: "None", value: "none" },
+            { label: "Small", value: "sm" },
+            { label: "Medium", value: "md" },
+            { label: "Large", value: "lg" },
+            { label: "Extra Large", value: "xl" },
+          ],
+        },
+        rowSpacing: {
+          type: "select",
+          label: "Row Spacing",
+          options: [
+            { label: "None", value: "none" },
+            { label: "Small", value: "sm" },
+            { label: "Medium", value: "md" },
+            { label: "Large", value: "lg" },
+            { label: "Extra Large", value: "xl" },
+          ],
+        },
+        padding: {
+          type: "select",
+          label: "Padding",
+          options: [
+            { label: "None", value: "none" },
+            { label: "Small", value: "sm" },
+            { label: "Medium", value: "md" },
+            { label: "Large", value: "lg" },
+            { label: "Extra Large", value: "xl" },
+          ],
+        },
+        columns: {
+          type: "radio",
+          label: "Column Ratio",
+          options: [
+            { label: "Equal (1:1)", value: "1-1" },
+            { label: "Left Wider (2:1)", value: "2-1" },
+            { label: "Right Wider (1:2)", value: "1-2" },
+          ],
+        },
+        className: { type: "text", label: "Custom Classes (Tailwind)" },
+        containerClassName: {
+          type: "text",
+          label: "Container Classes (Tailwind)",
+        },
+      },
+      defaultProps: {
+        leftColumnRows: "1",
+        rightColumnRows: "1",
+        leftColumnTop: [],
+        leftColumnBottom: [],
+        rightColumnTop: [],
+        rightColumnBottom: [],
+        spacing: "lg",
+        rowSpacing: "md",
+        padding: "md",
+        columns: "1-1",
+        className: "",
+        containerClassName: "",
+      },
+      render: ({
+        leftColumnRows,
+        rightColumnRows,
+        leftColumnTop: LeftColumnTop,
+        leftColumnBottom: LeftColumnBottom,
+        rightColumnTop: RightColumnTop,
+        rightColumnBottom: RightColumnBottom,
+        spacing,
+        rowSpacing,
+        padding,
+        columns,
+        className,
+        containerClassName,
+      }) => {
+        return (
+          <HeroFlexibleGrid
+            leftColumnRows={leftColumnRows}
+            rightColumnRows={rightColumnRows}
+            leftColumnTop={<LeftColumnTop />}
+            leftColumnBottom={<LeftColumnBottom />}
+            rightColumnTop={<RightColumnTop />}
+            rightColumnBottom={<RightColumnBottom />}
+            spacing={spacing}
+            rowSpacing={rowSpacing}
+            padding={padding}
+            columns={columns}
+            className={className}
+            containerClassName={containerClassName}
+          />
+        );
       },
     },
   },

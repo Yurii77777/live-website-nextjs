@@ -36,8 +36,8 @@ export interface LinkProps
     VariantProps<typeof linkVariants> {
   href: string;
   asButton?: boolean;
-  buttonVariant?: "default" | "destructive" | "outline" | "ghost";
-  buttonSize?: "default" | "sm" | "lg" | "icon";
+  buttonVariant?: "default" | "primary" | "ghost";
+  buttonSize?: "sm" | "md" | "lg" | "icon";
   external?: boolean;
 }
 

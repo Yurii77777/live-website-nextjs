@@ -11,7 +11,11 @@ import {
   type ChatMessageFormData,
 } from "@/schemas/chat.schema";
 
-export function Chat() {
+interface ChatProps {
+  initialContent?: React.ReactNode;
+}
+
+export function Chat({ initialContent }: ChatProps) {
   const { messages, sendMessage, status } = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -33,6 +37,11 @@ export function Chat() {
   return (
     <div className="flex flex-col h-full w-full">
       <div className="flex-1 overflow-y-auto px-4 py-4 mx-auto w-full max-w-3xl">
+        {initialContent && (
+          <div className="mb-6">
+            {initialContent}
+          </div>
+        )}
         {messages.map((message) => (
           <ChatMessage key={message.id} message={message} />
         ))}
