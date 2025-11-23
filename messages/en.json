@@ -9,7 +9,15 @@
   "chat": {
     "placeholder": "Type a message...",
     "send": "Send",
-    "startConversation": "Start conversation..."
+    "sending": "Sending...",
+    "startConversation": "Start conversation...",
+    "sendFailed": "Failed to send message",
+    "messageRequired": "Message cannot be empty",
+    "messageTooShort": "Message is too short (minimum 10 characters)",
+    "messageTooLong": "Message is too long (maximum 500 characters)",
+    "containsUnsafeContent": "Message contains unsafe content",
+    "authorUser": "You",
+    "authorAI": "Magic WebLab"
   },
   "languages": {
     "en": "ENG",

@@ -16,7 +16,7 @@ import {
   createPageSchema,
   type CreatePageFormData,
 } from "@/schemas/page.schema";
-import { CreatePageFields } from "@/components/forms/create-page-fields";
+import { CreatePageFields } from "@/components/forms/create-page";
 
 export function CreatePageModal() {
   const router = useRouter();

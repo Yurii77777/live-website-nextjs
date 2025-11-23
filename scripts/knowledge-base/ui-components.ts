@@ -109,7 +109,7 @@ Mobile-first адаптивні розміри
 ПРИКЛАДИ ВИКОРИСТАННЯ:
 - Телефон з liquid glass: <Icon name="PhoneIcon" variant="default" /> <Link href="tel:+380951658473">+38 095 165 84 73</Link>
 - Email з liquid glass: <Icon name="MailIcon" variant="default" /> <Link href="mailto:info@magic-weblab.com.ua">info@magic-weblab.com.ua</Link>
-- Адреса (inline): <Icon name="MapPinIcon" /> м. Київ, вул. 85-та Садова, буд. 6
+- Адреса (inline): <Icon name="MapPinIcon" /> Україна, м. Київ
 - Ціна (inline): <Icon name="DollarSignIcon" /> від $300
 - Термін (inline): <Icon name="ClockIcon" /> від 1 тижня
 
