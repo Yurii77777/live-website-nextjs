@@ -2,8 +2,8 @@ export const CONTACT_INFO = {
   phone: "+38 095 165 84 73",
   email: "info@magic-weblab.com.ua",
   address: {
-    uk: "м. Київ, вул. 85-та Садова, буд. 6",
-    en: "Kyiv, 85-ta Sadova St., building 6",
+    uk: "Україна, м. Київ",
+    en: "Ukraine, Kyiv",
   },
   hours: {
     uk: "Пн-Пт: 10:00-18:00",

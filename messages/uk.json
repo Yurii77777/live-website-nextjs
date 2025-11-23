@@ -9,7 +9,15 @@
   "chat": {
     "placeholder": "Введіть повідомлення...",
     "send": "Надіслати",
-    "startConversation": "Почніть розмову..."
+    "sending": "Відправка...",
+    "startConversation": "Почніть розмову...",
+    "sendFailed": "Не вдалося відправити повідомлення",
+    "messageRequired": "Повідомлення не може бути порожнім",
+    "messageTooShort": "Повідомлення занадто коротке (мінімум 10 символів)",
+    "messageTooLong": "Повідомлення занадто довге (максимум 500 символів)",
+    "containsUnsafeContent": "Повідомлення містить небезпечний контент",
+    "authorUser": "Ви",
+    "authorAI": "Magic WebLab"
   },
   "languages": {
     "en": "ENG",

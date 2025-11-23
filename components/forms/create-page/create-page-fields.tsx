@@ -36,7 +36,9 @@ export function CreatePageFields({
         error={errors.title}
         errorMessage={
           errors.title?.message
-            ? translateError(errors.title.message.replace("admin.messages.", ""))
+            ? translateError(
+                errors.title.message.replace("admin.messages.", "")
+              )
             : undefined
         }
         autoFocus
