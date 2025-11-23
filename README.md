@@ -9,8 +9,11 @@ AI‑powered website builder using Vercel AI SDK 5, multi‑provider models (Ope
 - **Tailwind CSS**
 - **Vercel AI SDK 5** with OpenAI and Google providers
 - **Puck Editor** for visual editing
-- **Prisma** ORM
+- **React Query** (@tanstack/react-query) for data fetching and mutations
+- **React Hook Form** + **Zod** for form validation
+- **Drizzle ORM** for database management
 - **PostgreSQL** with pgvector extension (Docker)
+- **next-intl** for internationalization
 
 ## Getting Started
 
@@ -61,16 +64,16 @@ docker-compose up -d
 ### 4. Run database migrations
 
 ```bash
-npx prisma migrate dev --name init
+npm run db:migrate
 ```
 
-### 5. Generate Prisma Client
+Or push schema directly (for development):
 
 ```bash
-npx prisma generate
+npm run db:push
 ```
 
-### 6. Seed the knowledge base (optional but recommended)
+### 5. Seed the knowledge base (optional but recommended)
 
 Seeds demo content and embeddings into the knowledge base (uses the current provider’s embedding model):
 
@@ -80,7 +83,7 @@ npm run seed:knowledge
 
 If you change provider or embedding model, reseed to regenerate embeddings.
 
-### 7. Run the development server
+### 6. Run the development server
 
 ```bash
 npm run dev
@@ -143,12 +146,12 @@ npm run seed:ui-kit
 
 **Note**: `npm run dev` automatically runs all seeds on startup.
 
-### Prisma Studio
+### Drizzle Studio
 
 View and edit your database:
 
 ```bash
-npx prisma studio
+npm run db:studio
 ```
 
 ### Stop database
@@ -162,37 +165,62 @@ docker-compose down
 ```
 ├── app/                         # Next.js App Router
 │   ├── [locale]/                # Localized routes (en/uk)
-│   │   └── page.tsx            
+│   │   ├── page.tsx            # Home page with chat
+│   │   └── admin/              # Admin dashboard and editor
 │   ├── api/
-│   │   └── chat/route.ts       # Chat API, streams UI messages
-│   └── generated/prisma/       # Prisma generated client (edge compat)
+│   │   ├── chat/route.ts       # Chat API, streams UI messages
+│   │   └── puck/               # Puck Editor API routes
+│   └── generated/              # Generated files (if any)
 ├── components/
-│   └── chat.tsx                # UI chat using @ai-sdk/react
+│   ├── chat/                   # Chat components
+│   │   ├── chat.tsx            # Main chat component
+│   │   ├── chat-message.tsx    # Individual message component
+│   │   └── index.ts            # Exports
+│   ├── forms/                  # Form components
+│   │   ├── chat-form.tsx       # Chat input form with validation
+│   │   └── create-page/        # Create page form components
+│   ├── modals/                 # Modal components
+│   ├── ui/                     # Reusable UI components
+│   └── ai-message-renderer.tsx # AI message renderer with rich content
 ├── constants/
 │   ├── ai.ts                   # System prompts and AI config
+│   ├── chat.ts                 # Chat validation constants
 │   ├── company.ts              # Static company info
-│   ├── contacts.ts             # Contacts
+│   ├── pages.ts                # Page validation constants
 │   └── index.ts                # Re‑exports
+├── helpers/
+│   ├── sanitize-chat-input.ts  # Input sanitization and security validation
+│   └── translate-error.ts      # Error message translation helper
+├── schemas/
+│   ├── chat.schema.ts          # Chat message validation schema (Zod)
+│   └── page.schema.ts          # Page creation validation schema (Zod)
 ├── i18n/                       # Locale routing helpers (next-intl)
 ├── lib/
 │   ├── ai.ts                   # AI provider configuration (chat + embeddings)
-│   ├── prisma.ts               # Prisma client singleton
+│   ├── db/                     # Database configuration
+│   │   ├── index.ts            # Drizzle client singleton
+│   │   └── schema.ts           # Database schema (Drizzle)
 │   └── vector-search.ts        # KB retrieval with embeddings
-├── prisma/
-│   ├── migrations/             # Prisma migrations
-│   └── schema.prisma           # Database schema
+├── drizzle/                    # Drizzle migrations
+│   └── meta/                   # Migration metadata
+├── providers/
+│   ├── query-provider.tsx      # React Query provider
+│   └── toast-provider.tsx      # Toast notifications provider
 ├── scripts/
-│   └── seed-knowledge-base.ts  # Seeds KB entries + embeddings
+│   └── knowledge-base/         # Knowledge base seeding scripts
 └── docker-compose.yml          # PostgreSQL + pgvector
 ```
 
 ## Key Behaviors
 
-- Streaming: API returns `toUIMessageStreamResponse()` so `useChat` updates progressively.
-- Messages: Client sends UI messages (`parts`), server converts to model messages before calling `streamText`.
-- Retrieval‑augmented: The server retrieves relevant context from the knowledge base and injects it into the system prompt.
-- Locale: API detects locale via referer path (`/uk` or `/en`), falling back to `Accept-Language`. System prompt switches accordingly.
-- Tailwind: `darkMode: "class"` (string form). If you previously used `["class"]`, update it.
+- **Streaming**: API returns `toUIMessageStreamResponse()` so `useChat` updates progressively with auto-scroll.
+- **Messages**: Client sends UI messages (`parts`), server converts to model messages before calling `streamText`.
+- **Retrieval‑augmented**: The server retrieves relevant context from the knowledge base and injects it into the system prompt.
+- **Locale**: API detects locale via referer path (`/uk` or `/en`), falling back to `Accept-Language`. System prompt switches accordingly.
+- **Input Validation**: Chat messages are validated with Zod schema (min 10, max 500 characters) and sanitized for security.
+- **Security**: Input sanitization prevents SQL injection, XSS, JSON injection, and prompt injection attacks.
+- **Form Management**: React Hook Form + Zod for type-safe form validation across the application.
+- **State Management**: React Query for server state management with optimistic updates and error handling.
 
 ## Knowledge Base (Vector Search)
 
