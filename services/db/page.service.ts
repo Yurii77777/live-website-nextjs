@@ -24,7 +24,15 @@ export const pageService = {
   },
 
   async create(data: NewPage): Promise<Page> {
-    const [page] = await db.insert(pages).values(data).returning();
+    const now = new Date();
+    const [page] = await db
+      .insert(pages)
+      .values({
+        ...data,
+        createdAt: now,
+        updatedAt: now,
+      })
+      .returning();
     return page;
   },
 

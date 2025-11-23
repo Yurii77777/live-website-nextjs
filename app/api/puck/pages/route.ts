@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { pageService } from "@/services/db/page.service";
+import { createEmptyLocalizedContent } from "@/types/localized-content";
 
 export async function GET() {
   try {
@@ -37,7 +38,7 @@ export async function POST(req: NextRequest) {
     const page = await pageService.create({
       slug,
       title,
-      content: { content: [], root: {} },
+      content: createEmptyLocalizedContent(),
       published: false,
     });
 

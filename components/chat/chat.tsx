@@ -36,12 +36,8 @@ export function Chat({ initialContent }: ChatProps) {
 
   return (
     <div className="flex flex-col h-full w-full">
-      <div className="flex-1 overflow-y-auto px-4 py-4 mx-auto w-full max-w-3xl">
-        {initialContent && (
-          <div className="mb-6">
-            {initialContent}
-          </div>
-        )}
+      <div className="flex-1 overflow-y-auto px-4 py-4 mx-auto w-full">
+        {initialContent && <div className="mb-6">{initialContent}</div>}
         {messages.map((message) => (
           <ChatMessage key={message.id} message={message} />
         ))}
