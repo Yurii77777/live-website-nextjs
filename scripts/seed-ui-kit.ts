@@ -1,50 +1,52 @@
-import { prisma } from "@/lib/prisma";
+import { pageService } from "@/services/db/page.service";
 import * as path from "path";
 import { generateUIKitContent } from "./generators/puck-content-generator";
+import { seedConfig } from "@/configs/knowledge-base.config";
 
 async function seedUIKit() {
+  // Check if UI Kit seeding is enabled
+  if (!seedConfig.pages.uiKit) {
+    console.log("⏭️  UI Kit page seeding is disabled in config");
+    return;
+  }
+
   console.log("🎨 Starting UI Kit page seeding...");
 
   try {
-    // Path to UI components directory
     const uiDir = path.join(process.cwd(), "components", "ui");
 
     console.log(`📂 Scanning components from: ${uiDir}`);
 
-    // Generate Puck content from actual UI components
     const puckData = generateUIKitContent(uiDir);
 
     console.log(`✅ Generated content with ${puckData.content.length} items`);
 
-    // Check if ui-kit page already exists
-    const existingPage = await prisma.page.findUnique({
-      where: { slug: "ui-kit" },
-    });
+    const existingPage = await pageService.findBySlug("ui-kit");
+
+    // If seedIfMissing is true and page exists, skip
+    if (seedConfig.pages.seedIfMissing && existingPage) {
+      console.log("⏭️  UI Kit page already exists, skipping (seedIfMissing: true)");
+      return;
+    }
 
     if (existingPage) {
       console.log("🔄 Updating existing ui-kit page...");
 
-      await prisma.page.update({
-        where: { slug: "ui-kit" },
-        data: {
-          title: "UI Kit",
-          content: puckData,
-          published: true,
-          updatedAt: new Date(),
-        },
+      await pageService.upsert("ui-kit", {
+        title: "UI Kit",
+        content: puckData,
+        published: true,
       });
 
       console.log("✅ UI Kit page updated successfully!");
     } else {
       console.log("📝 Creating new ui-kit page...");
 
-      await prisma.page.create({
-        data: {
-          slug: "ui-kit",
-          title: "UI Kit",
-          content: puckData,
-          published: true,
-        },
+      await pageService.create({
+        slug: "ui-kit",
+        title: "UI Kit",
+        content: puckData,
+        published: true,
       });
 
       console.log("✅ UI Kit page created successfully!");
@@ -63,6 +65,6 @@ seedUIKit()
     console.error("Fatal error:", error);
     process.exit(1);
   })
-  .finally(async () => {
-    await prisma.$disconnect();
+  .finally(() => {
+    process.exit(0);
   });

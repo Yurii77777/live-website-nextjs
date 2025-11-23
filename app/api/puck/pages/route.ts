@@ -1,21 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { pageService } from "@/services/db/page.service";
 
-// GET all pages
 export async function GET() {
   try {
-    const pages = await prisma.page.findMany({
-      select: {
-        id: true,
-        slug: true,
-        title: true,
-        published: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-      orderBy: { updatedAt: "desc" },
-    });
-
+    const pages = await pageService.findAll();
     return NextResponse.json(pages);
   } catch (error) {
     console.error("Failed to fetch pages:", error);
@@ -26,7 +14,6 @@ export async function GET() {
   }
 }
 
-// POST create new page
 export async function POST(req: NextRequest) {
   try {
     const { slug, title } = await req.json();
@@ -38,10 +25,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check if slug already exists
-    const existingPage = await prisma.page.findUnique({
-      where: { slug },
-    });
+    const existingPage = await pageService.findBySlug(slug);
 
     if (existingPage) {
       return NextResponse.json(
@@ -50,13 +34,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const page = await prisma.page.create({
-      data: {
-        slug,
-        title,
-        content: { content: [], root: {} },
-        published: false,
-      },
+    const page = await pageService.create({
+      slug,
+      title,
+      content: { content: [], root: {} },
+      published: false,
     });
 
     return NextResponse.json(page);
