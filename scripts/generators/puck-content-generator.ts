@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
+import type { Locale } from "@/i18n/routing";
 
 type PuckContent = {
   type: string;
@@ -9,6 +10,72 @@ type PuckContent = {
 type PuckData = {
   content: PuckContent[];
   root: Record<string, any>;
+};
+
+// Translations for UI Kit content
+const translations = {
+  uk: {
+    pageTitle: "Бібліотека UI компонентів",
+    pageDescription: "Повна демонстрація всіх UI компонентів, взятих безпосередньо з директорії components/ui. Ця сторінка автоматично згенерована на основі фактичних визначень компонентів.",
+    source: "Джерело",
+    button: {
+      text: "Натисніть мене",
+    },
+    heading: {
+      example: "Приклад заголовка",
+    },
+    paragraph: {
+      example: (variant: string) => `Це приклад параграфа ${variant}. Він демонструє, як виглядає текст з цим варіантом.`,
+    },
+    link: {
+      text: "Приклад посилання",
+    },
+    hero: {
+      leftColumn: "Ліва колонка",
+      rightColumn: "Права колонка",
+      leftTop: "Ліва верхня",
+      leftBottom: "Ліва нижня",
+      rightTop: "Права верхня",
+      rightBottom: "Права нижня",
+      leftContent: "Це контент лівої колонки Hero компонента.",
+      rightContent: "Це контент правої колонки Hero компонента.",
+      firstRowLeft: "Перший рядок лівої колонки.",
+      secondRowLeft: "Другий рядок лівої колонки.",
+      firstRowRight: "Перший рядок правої колонки.",
+      secondRowRight: "Другий рядок правої колонки.",
+    },
+  },
+  en: {
+    pageTitle: "UI Component Library",
+    pageDescription: "A comprehensive showcase of all UI components extracted directly from the components/ui directory. This page is auto-generated based on actual component definitions.",
+    source: "Source",
+    button: {
+      text: "Click Me",
+    },
+    heading: {
+      example: "Heading Example",
+    },
+    paragraph: {
+      example: (variant: string) => `This is an example of a ${variant} paragraph. It demonstrates how text appears with this variant.`,
+    },
+    link: {
+      text: "Example Link",
+    },
+    hero: {
+      leftColumn: "Left Column",
+      rightColumn: "Right Column",
+      leftTop: "Left Top",
+      leftBottom: "Left Bottom",
+      rightTop: "Right Top",
+      rightBottom: "Right Bottom",
+      leftContent: "This is the left column content of the Hero component.",
+      rightContent: "This is the right column content of the Hero component.",
+      firstRowLeft: "First row of the left column.",
+      secondRowLeft: "Second row of the left column.",
+      firstRowRight: "First row of the right column.",
+      secondRowRight: "Second row of the right column.",
+    },
+  },
 };
 
 type ComponentVariant = {
@@ -186,12 +253,14 @@ function generateComponentExample(
 /**
  * Generate descriptive text content for a component variant
  */
-function getExampleText(componentName: string, variantValue?: string): string {
+function getExampleText(componentName: string, locale: Locale, variantValue?: string): string {
+  const t = translations[locale];
+
   const componentExamples: Record<string, string> = {
-    Button: "Click Me",
-    Heading: `${componentName} Example`,
-    Paragraph: `This is an example of a ${variantValue || "default"} paragraph. It demonstrates how text appears with this variant.`,
-    Link: "Example Link",
+    Button: t.button.text,
+    Heading: t.heading.example,
+    Paragraph: t.paragraph.example(variantValue || "default"),
+    Link: t.link.text,
   };
 
   return componentExamples[componentName] || `${componentName} Example`;
@@ -201,9 +270,11 @@ function getExampleText(componentName: string, variantValue?: string): string {
  * Generate single example for a component with default props
  */
 function generateComponentVariants(
-  metadata: ComponentMetadata
+  metadata: ComponentMetadata,
+  locale: Locale
 ): PuckContent[] {
   const { name, defaultVariants, specialProps } = metadata;
+  const t = translations[locale];
 
   // Start with defaultVariants or empty object
   const props: Record<string, any> = { ...defaultVariants };
@@ -228,7 +299,7 @@ function generateComponentVariants(
         type: "Heading",
         props: {
           id: generateId(),
-          text: "Left Column",
+          text: t.hero.leftColumn,
           variant: "h2",
           align: "left",
           className: "",
@@ -238,7 +309,7 @@ function generateComponentVariants(
         type: "Paragraph",
         props: {
           id: generateId(),
-          text: "This is the left column content of the Hero component.",
+          text: t.hero.leftContent,
           variant: "default",
           align: "left",
           className: "",
@@ -250,7 +321,7 @@ function generateComponentVariants(
         type: "Heading",
         props: {
           id: generateId(),
-          text: "Right Column",
+          text: t.hero.rightColumn,
           variant: "h2",
           align: "left",
           className: "",
@@ -260,7 +331,7 @@ function generateComponentVariants(
         type: "Paragraph",
         props: {
           id: generateId(),
-          text: "This is the right column content of the Hero component.",
+          text: t.hero.rightContent,
           variant: "default",
           align: "left",
           className: "",
@@ -282,7 +353,7 @@ function generateComponentVariants(
         type: "Heading",
         props: {
           id: generateId(),
-          text: "Left Top",
+          text: t.hero.leftTop,
           variant: "h3",
           align: "left",
           className: "",
@@ -292,7 +363,7 @@ function generateComponentVariants(
         type: "Paragraph",
         props: {
           id: generateId(),
-          text: "First row of the left column.",
+          text: t.hero.firstRowLeft,
           variant: "default",
           align: "left",
           className: "",
@@ -305,7 +376,7 @@ function generateComponentVariants(
         type: "Heading",
         props: {
           id: generateId(),
-          text: "Left Bottom",
+          text: t.hero.leftBottom,
           variant: "h3",
           align: "left",
           className: "",
@@ -315,7 +386,7 @@ function generateComponentVariants(
         type: "Paragraph",
         props: {
           id: generateId(),
-          text: "Second row of the left column.",
+          text: t.hero.secondRowLeft,
           variant: "default",
           align: "left",
           className: "",
@@ -328,7 +399,7 @@ function generateComponentVariants(
         type: "Heading",
         props: {
           id: generateId(),
-          text: "Right Top",
+          text: t.hero.rightTop,
           variant: "h3",
           align: "left",
           className: "",
@@ -338,7 +409,7 @@ function generateComponentVariants(
         type: "Paragraph",
         props: {
           id: generateId(),
-          text: "First row of the right column.",
+          text: t.hero.firstRowRight,
           variant: "default",
           align: "left",
           className: "",
@@ -351,7 +422,7 @@ function generateComponentVariants(
         type: "Heading",
         props: {
           id: generateId(),
-          text: "Right Bottom",
+          text: t.hero.rightBottom,
           variant: "h3",
           align: "left",
           className: "",
@@ -361,7 +432,7 @@ function generateComponentVariants(
         type: "Paragraph",
         props: {
           id: generateId(),
-          text: "Second row of the right column.",
+          text: t.hero.secondRowRight,
           variant: "default",
           align: "left",
           className: "",
@@ -377,7 +448,7 @@ function generateComponentVariants(
 
   // Add text/content for text-based components
   if (["Button", "Heading", "Paragraph", "Link"].includes(name)) {
-    props.text = getExampleText(name);
+    props.text = getExampleText(name, locale);
   }
 
   if (name === "Link") {
@@ -413,21 +484,22 @@ function generateComponentVariants(
 /**
  * Generate complete UI Kit page content from scanned components
  */
-export function generateUIKitContent(uiDir: string): PuckData {
+export function generateUIKitContent(uiDir: string, locale: Locale = "uk"): PuckData {
   // Reset counter for consistent IDs
   idCounter = 0;
 
+  const t = translations[locale];
   const content: PuckContent[] = [];
 
   // Page header
   content.push(generateComponentExample("Heading", {
-    text: "UI Component Library",
+    text: t.pageTitle,
     variant: "h1",
     align: "center",
   }));
 
   content.push(generateComponentExample("Paragraph", {
-    text: "A comprehensive showcase of all UI components extracted directly from the components/ui directory. This page is auto-generated based on actual component definitions.",
+    text: t.pageDescription,
     variant: "lead",
     align: "center",
   }));
@@ -449,12 +521,12 @@ export function generateUIKitContent(uiDir: string): PuckData {
     }));
 
     content.push(generateComponentExample("Paragraph", {
-      text: `Source: components/ui/${component.fileName}`,
+      text: `${t.source}: components/ui/${component.fileName}`,
       variant: "small",
     }));
 
     // Generate single example for this component
-    const examples = generateComponentVariants(component);
+    const examples = generateComponentVariants(component, locale);
 
     // Add the example (should be only one)
     examples.forEach(example => content.push(example));

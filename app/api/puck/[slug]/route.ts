@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { pageService } from "@/services/db/page.service";
 import { PROTECTED_PAGES } from "@/constants/pages";
+import { createEmptyLocalizedContent } from "@/types/localized-content";
 
 import { PuckParams } from "@/app/api/types/puck.types";
 
@@ -10,11 +11,8 @@ export async function GET(req: NextRequest, { params }: PuckParams) {
 
     const page = await pageService.findBySlug(slug);
 
-    if (!page) {
-      return NextResponse.json({
-        content: [],
-        root: {},
-      });
+    if (!page || !page.content) {
+      return NextResponse.json(createEmptyLocalizedContent());
     }
 
     return NextResponse.json(page.content);
