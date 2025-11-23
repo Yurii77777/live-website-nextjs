@@ -221,6 +221,160 @@ function generateComponentVariants(
     }
   }
 
+  // Special handling for HeroTwoColumn component (with slots)
+  if (name === "Hero-two-column" || name === "HeroTwoColumn") {
+    props.leftColumn = [
+      {
+        type: "Heading",
+        props: {
+          id: generateId(),
+          text: "Left Column",
+          variant: "h2",
+          align: "left",
+          className: "",
+        },
+      },
+      {
+        type: "Paragraph",
+        props: {
+          id: generateId(),
+          text: "This is the left column content of the Hero component.",
+          variant: "default",
+          align: "left",
+          className: "",
+        },
+      },
+    ];
+    props.rightColumn = [
+      {
+        type: "Heading",
+        props: {
+          id: generateId(),
+          text: "Right Column",
+          variant: "h2",
+          align: "left",
+          className: "",
+        },
+      },
+      {
+        type: "Paragraph",
+        props: {
+          id: generateId(),
+          text: "This is the right column content of the Hero component.",
+          variant: "default",
+          align: "left",
+          className: "",
+        },
+      },
+    ];
+    if (!props.spacing) props.spacing = "lg";
+    if (!props.padding) props.padding = "md";
+    if (!props.columns) props.columns = "1-1";
+  }
+
+  // Special handling for HeroFlexibleGrid component (with 4 slots)
+  if (name === "Hero-flexible-grid" || name === "HeroFlexibleGrid") {
+    props.leftColumnRows = "2";
+    props.rightColumnRows = "2";
+
+    props.leftColumnTop = [
+      {
+        type: "Heading",
+        props: {
+          id: generateId(),
+          text: "Left Top",
+          variant: "h3",
+          align: "left",
+          className: "",
+        },
+      },
+      {
+        type: "Paragraph",
+        props: {
+          id: generateId(),
+          text: "First row of the left column.",
+          variant: "default",
+          align: "left",
+          className: "",
+        },
+      },
+    ];
+
+    props.leftColumnBottom = [
+      {
+        type: "Heading",
+        props: {
+          id: generateId(),
+          text: "Left Bottom",
+          variant: "h3",
+          align: "left",
+          className: "",
+        },
+      },
+      {
+        type: "Paragraph",
+        props: {
+          id: generateId(),
+          text: "Second row of the left column.",
+          variant: "default",
+          align: "left",
+          className: "",
+        },
+      },
+    ];
+
+    props.rightColumnTop = [
+      {
+        type: "Heading",
+        props: {
+          id: generateId(),
+          text: "Right Top",
+          variant: "h3",
+          align: "left",
+          className: "",
+        },
+      },
+      {
+        type: "Paragraph",
+        props: {
+          id: generateId(),
+          text: "First row of the right column.",
+          variant: "default",
+          align: "left",
+          className: "",
+        },
+      },
+    ];
+
+    props.rightColumnBottom = [
+      {
+        type: "Heading",
+        props: {
+          id: generateId(),
+          text: "Right Bottom",
+          variant: "h3",
+          align: "left",
+          className: "",
+        },
+      },
+      {
+        type: "Paragraph",
+        props: {
+          id: generateId(),
+          text: "Second row of the right column.",
+          variant: "default",
+          align: "left",
+          className: "",
+        },
+      },
+    ];
+
+    if (!props.spacing) props.spacing = "lg";
+    if (!props.rowSpacing) props.rowSpacing = "md";
+    if (!props.padding) props.padding = "md";
+    if (!props.columns) props.columns = "1-1";
+  }
+
   // Add text/content for text-based components
   if (["Button", "Heading", "Paragraph", "Link"].includes(name)) {
     props.text = getExampleText(name);

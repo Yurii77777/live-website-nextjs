@@ -8,14 +8,12 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col h-full">
-      {hasContent && (
-        <section className="w-full max-w-[1280px] mx-auto">
-          <PuckRenderer data={homePage.content as any} />
-        </section>
-      )}
-
       <section className="flex-1 overflow-hidden w-full max-w-[1280px] mx-auto">
-        <Chat />
+        <Chat
+          initialContent={
+            hasContent ? <PuckRenderer data={homePage.content as any} /> : undefined
+          }
+        />
       </section>
     </div>
   );
