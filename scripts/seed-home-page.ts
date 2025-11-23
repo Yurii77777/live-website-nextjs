@@ -1,5 +1,6 @@
 import { pageService } from "@/services/db/page.service";
 import { seedConfig } from "@/configs/knowledge-base.config";
+import { createEmptyLocalizedContent } from "@/types/localized-content";
 
 async function seedHomePage() {
   // Check if Home page seeding is enabled
@@ -11,12 +12,9 @@ async function seedHomePage() {
   console.log("🏠 Starting Home page seeding...");
 
   try {
-    const puckData = {
-      content: [],
-      root: {},
-    };
+    const localizedContent = createEmptyLocalizedContent();
 
-    console.log(`✅ Created empty page structure`);
+    console.log(`✅ Created empty localized page structure`);
 
     const existingPage = await pageService.findBySlug("home");
 
@@ -31,7 +29,7 @@ async function seedHomePage() {
 
       await pageService.upsert("home", {
         title: "Головна",
-        content: puckData,
+        content: localizedContent,
         published: true,
       });
 
@@ -42,7 +40,7 @@ async function seedHomePage() {
       await pageService.create({
         slug: "home",
         title: "Головна",
-        content: puckData,
+        content: localizedContent,
         published: true,
       });
 

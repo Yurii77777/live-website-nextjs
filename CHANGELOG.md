@@ -70,6 +70,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Full Tailwind customization support
   - Integrated into UI Kit auto-generation system
 - Initial content support in Chat component via `initialContent` prop
+- **Multilingual Puck Editor System** - comprehensive localization support for page content
+  - LocalizedPuckContent type system for storing content in multiple locales
+  - Locale switcher in Puck Editor with UK/EN flag buttons for easy language switching
+  - Auto-sync structure between locales when switching languages in editor
+  - Auto-sync structure propagation when saving default locale (syncs to all other locales)
+  - Structure synchronization helper that preserves existing translations while updating component layout
+  - Localized UI Kit generator with separate translations for Ukrainian and English
 
 ### Changed
 - Refactored chat components into dedicated `components/chat/` directory
@@ -83,6 +90,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Chat component refactored to accept `initialContent` prop for rendering page content
 - Home page restructured to pass PuckRenderer content into Chat component
 - Puck content generator updated with special handling for Hero components
+- **Puck Editor page** - enhanced with multilingual capabilities
+  - Uses dynamic `routing.defaultLocale` instead of hardcoded locale values
+  - Implements automatic structure synchronization on locale switch via useEffect
+  - Saves all locales in hybrid structure: `{ uk: { content: [], root: {} }, en: { content: [], root: {} } }`
+- **PuckRenderer component** - updated to automatically detect and use current locale
+  - Uses useLocale() hook for automatic locale selection
+  - Renders appropriate locale content based on user's current language
+- **UI Kit generator** - refactored with full localization support
+  - Added translation dictionaries for UK and EN
+  - Generates separate content for each locale with proper translations
+  - Maintains consistent component structure across all locales
+- **Page service** - improved timestamp handling
+  - Explicitly sets createdAt and updatedAt timestamps to fix PostgreSQL constraint issues
+- **Database seeding** - updated to generate localized content
+  - UI Kit seeding creates content for both UK and EN locales
+  - All seed scripts now support LocalizedPuckContent structure
 
 ### Fixed
 - Chat form now properly handles validation errors without showing redundant messages
@@ -91,6 +114,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - buttonVariant: now correctly supports "default" | "primary" | "ghost" (was "destructive" | "outline")
   - buttonSize: now correctly supports "sm" | "md" | "lg" | "icon" (was "default")
 - Chat scroll issue where PuckEditor components were static and didn't scroll with messages
+- PostgreSQL constraint error "null value in column 'updatedAt'" when creating pages
+- Seed scripts not generating localized content for UI components
+- Editor not showing same component structure when switching between languages
+- Hardcoded locale references replaced with dynamic configuration from i18n/routing
 
 ### Removed
 - Removed redundant validation error messages for empty and too short messages (replaced with visual indicators)

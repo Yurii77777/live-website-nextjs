@@ -59,4 +59,20 @@ export const knowledgeBaseService = {
       }))
       .filter((r) => r.similarity >= threshold);
   },
+
+  async getSystemComponents(): Promise<KnowledgeBaseSearchResult[]> {
+    const results = await db
+      .select({
+        content: knowledgeBase.content,
+        metadata: knowledgeBase.metadata,
+      })
+      .from(knowledgeBase)
+      .where(sql`${knowledgeBase.metadata}->>'category' = 'system'`);
+
+    return results.map((r) => ({
+      content: r.content,
+      similarity: 1, // System components always have 100% relevance
+      metadata: r.metadata as KnowledgeBaseSearchResult['metadata'],
+    }));
+  },
 };

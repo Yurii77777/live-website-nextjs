@@ -5,7 +5,7 @@ export const seedConfig = {
       companyInfo: true,
       services: true,
       businessDomains: true,
-      uiComponents: false,
+      uiComponents: true,
       process: true,
     },
     // Clear existing data before seeding

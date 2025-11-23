@@ -2,6 +2,7 @@ import { pageService } from "@/services/db/page.service";
 import * as path from "path";
 import { generateUIKitContent } from "./generators/puck-content-generator";
 import { seedConfig } from "@/configs/knowledge-base.config";
+import type { LocalizedPuckContent } from "@/types/localized-content";
 
 async function seedUIKit() {
   // Check if UI Kit seeding is enabled
@@ -17,9 +18,17 @@ async function seedUIKit() {
 
     console.log(`📂 Scanning components from: ${uiDir}`);
 
-    const puckData = generateUIKitContent(uiDir);
+    // Generate content for each locale
+    const ukData = generateUIKitContent(uiDir, "uk");
+    const enData = generateUIKitContent(uiDir, "en");
 
-    console.log(`✅ Generated content with ${puckData.content.length} items`);
+    // Create localized content
+    const localizedContent: LocalizedPuckContent = {
+      uk: ukData,
+      en: enData,
+    };
+
+    console.log(`✅ Generated content with ${ukData.content.length} items (UK) and ${enData.content.length} items (EN)`);
 
     const existingPage = await pageService.findBySlug("ui-kit");
 
@@ -34,7 +43,7 @@ async function seedUIKit() {
 
       await pageService.upsert("ui-kit", {
         title: "UI Kit",
-        content: puckData,
+        content: localizedContent,
         published: true,
       });
 
@@ -45,7 +54,7 @@ async function seedUIKit() {
       await pageService.create({
         slug: "ui-kit",
         title: "UI Kit",
-        content: puckData,
+        content: localizedContent,
         published: true,
       });
 

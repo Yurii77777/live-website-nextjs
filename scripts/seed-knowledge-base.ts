@@ -15,7 +15,7 @@ function parseArgs() {
   const options = {
     only: [] as CategoryKey[],
     skip: [] as CategoryKey[],
-    clearBefore: knowledgeBaseConfig.vectorSearch.clearBefore,
+    clearBefore: knowledgeBaseConfig.vectorSearch.clearBefore as boolean,
     help: false,
   };
 
@@ -91,7 +91,7 @@ async function seedKnowledgeBase() {
     content = getCategoriesContent(options.only);
     categoryInfo = `Categories: ${options.only.join(", ")}`;
   } else if (options.skip.length > 0) {
-    const enabledCategories = { ...knowledgeBaseConfig.enabled };
+    const enabledCategories = { ...knowledgeBaseConfig.enabled } as Record<CategoryKey, boolean>;
     options.skip.forEach((cat) => {
       enabledCategories[cat] = false;
     });
