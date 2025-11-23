@@ -58,6 +58,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Validation constants for chat and page schemas (CHAT_VALIDATION, PAGE_VALIDATION)
 - Localized author names for chat messages (user and AI)
 - Error handling with toast notifications for chat failures
+- **HeroTwoColumn component** - responsive two-column Hero section with PuckEditor Slots API support
+  - Equal (1:1), Left Wider (2:1), and Right Wider (1:2) column ratios
+  - Configurable spacing, padding, and Tailwind class customization
+  - Automatic mobile responsiveness (columns stack vertically)
+  - Integrated into UI Kit auto-generation system
+- **HeroFlexibleGrid component** - advanced Hero section with flexible row layout
+  - 4 independent zones (leftColumnTop, leftColumnBottom, rightColumnTop, rightColumnBottom)
+  - Each column can have 1 or 2 rows independently
+  - Separate row spacing and column spacing controls
+  - Full Tailwind customization support
+  - Integrated into UI Kit auto-generation system
+- Initial content support in Chat component via `initialContent` prop
 
 ### Changed
 - Refactored chat components into dedicated `components/chat/` directory
@@ -65,13 +77,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved chat form validation with better UX (hidden validation messages for empty/short messages)
 - Enhanced chat input validation to require minimum 10 characters for meaningful business queries
 - Extracted magic numbers to constants for better maintainability
+- **Improved chat scroll behavior** - PuckRenderer components now render inside Chat's scrollable area
+  - Components from PuckEditor now scroll with chat messages
+  - Better UX: content doesn't occupy static space outside chat
+- Chat component refactored to accept `initialContent` prop for rendering page content
+- Home page restructured to pass PuckRenderer content into Chat component
+- Puck content generator updated with special handling for Hero components
 
 ### Fixed
 - Chat form now properly handles validation errors without showing redundant messages
 - Button disabled state now correctly checks minimum message length
+- **Link component type definitions** - corrected buttonVariant and buttonSize types
+  - buttonVariant: now correctly supports "default" | "primary" | "ghost" (was "destructive" | "outline")
+  - buttonSize: now correctly supports "sm" | "md" | "lg" | "icon" (was "default")
+- Chat scroll issue where PuckEditor components were static and didn't scroll with messages
 
 ### Removed
 - Removed redundant validation error messages for empty and too short messages (replaced with visual indicators)
+- **Complete Prisma ORM cleanup** - removed all remaining Prisma artifacts after migration to Drizzle
+  - Deleted `app/generated/prisma/` directory with generated Prisma Client
+  - Deleted `lib/prisma.ts` client wrapper
+  - Deleted `prisma.config.ts` configuration file
+  - Cleaned up `.gitignore` Prisma-related entries
 
 ### BREAKING CHANGES
 
