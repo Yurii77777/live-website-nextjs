@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { useEffect, useRef } from "react";
 
 interface BaseModalProps {
@@ -57,7 +57,7 @@ export function BaseModal({ children }: BaseModalProps) {
           "border-t border-white/10",
           "shadow-[0_8px_30px_rgba(0,0,0,0.5)]",
           "before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit]",
-          "before:bg-linear-to-r before:from-blue-500 before:via-purple-500 before:to-pink-500 before:opacity-20",
+          "before:bg-brand-gradient-overlay before:opacity-20",
           "relative z-10 text-white",
         ].join(" ")}
       >

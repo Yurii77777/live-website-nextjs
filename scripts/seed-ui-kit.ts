@@ -2,6 +2,7 @@ import { pageService } from "@/services/db/page.service";
 import * as path from "path";
 import { generateUIKitContent } from "./generators/puck-content-generator";
 import { seedConfig } from "@/configs/knowledge-base.config";
+import { PAGE_SLUGS } from "@/constants/pages";
 import type { LocalizedPuckContent } from "@/types/localized-content";
 
 async function seedUIKit() {
@@ -30,7 +31,7 @@ async function seedUIKit() {
 
     console.log(`✅ Generated content with ${ukData.content.length} items (UK) and ${enData.content.length} items (EN)`);
 
-    const existingPage = await pageService.findBySlug("ui-kit");
+    const existingPage = await pageService.findBySlug(PAGE_SLUGS.UI_KIT);
 
     // If seedIfMissing is true and page exists, skip
     if (seedConfig.pages.seedIfMissing && existingPage) {
@@ -41,7 +42,7 @@ async function seedUIKit() {
     if (existingPage) {
       console.log("🔄 Updating existing ui-kit page...");
 
-      await pageService.upsert("ui-kit", {
+      await pageService.upsert(PAGE_SLUGS.UI_KIT, {
         title: "UI Kit",
         content: localizedContent,
         published: true,
@@ -52,7 +53,7 @@ async function seedUIKit() {
       console.log("📝 Creating new ui-kit page...");
 
       await pageService.create({
-        slug: "ui-kit",
+        slug: PAGE_SLUGS.UI_KIT,
         title: "UI Kit",
         content: localizedContent,
         published: true,
@@ -61,8 +62,8 @@ async function seedUIKit() {
       console.log("✅ UI Kit page created successfully!");
     }
 
-    console.log(`\n🌐 View at: /p/ui-kit`);
-    console.log(`📝 Edit at: /admin/editor/ui-kit`);
+    console.log(`\n🌐 View at: /p/${PAGE_SLUGS.UI_KIT}`);
+    console.log(`📝 Edit at: /admin/editor/${PAGE_SLUGS.UI_KIT}`);
   } catch (error) {
     console.error("❌ Error seeding UI Kit:", error);
     throw error;

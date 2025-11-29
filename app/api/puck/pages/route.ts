@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { pageService } from "@/services/db/page.service";
-import { createEmptyLocalizedContent } from "@/types/localized-content";
+import { createEmptyLocalizedContent } from "@/helpers/localized-content";
 
 export async function GET() {
   try {

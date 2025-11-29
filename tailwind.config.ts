@@ -57,6 +57,25 @@ const config: Config = {
           "4": "hsl(43 74% 66%)",
           "5": "hsl(27 87% 67%)",
         },
+        // Brand colors
+        brand: {
+          blue: {
+            400: "#60a5fa", // Used in text gradients
+            500: "#3b82f6", // Used in background gradients
+          },
+          purple: {
+            400: "#c084fc", // Used in text gradients
+            500: "#a855f7", // Used in background gradients
+          },
+          pink: {
+            400: "#f472b6", // Used in text gradients
+            500: "#ec4899", // Used in background gradients
+          },
+        },
+        // Header theme
+        header: {
+          bg: "#111827", // Main header background color (gray-900)
+        },
       },
       backdropBlur: {
         glass: "8px",
@@ -68,6 +87,14 @@ const config: Config = {
       },
       transitionTimingFunction: {
         glass: "cubic-bezier(0.4, 0, 0.2, 1)",
+      },
+      backgroundImage: {
+        // Brand gradients
+        "brand-gradient": "linear-gradient(to right, var(--tw-gradient-stops))",
+        "brand-gradient-overlay":
+          "linear-gradient(to right, #3b82f6, #a855f7, #ec4899)",
+        "brand-gradient-text":
+          "linear-gradient(to right, #60a5fa, #c084fc, #f472b6)",
       },
     },
   },
