@@ -1,5 +1,6 @@
 import * as React from "react";
 import NextLink from "next/link";
+import { Link as LocalizedLink } from "@/i18n/routing";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 import { buttonVariants } from "./button";
@@ -71,9 +72,9 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
 
       if (isNextLink) {
         return (
-          <NextLink href={href} className={buttonClasses} ref={ref} {...props}>
+          <LocalizedLink href={href} className={buttonClasses} ref={ref} {...props}>
             {children}
-          </NextLink>
+          </LocalizedLink>
         );
       }
 
@@ -97,9 +98,9 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
 
     if (isNextLink) {
       return (
-        <NextLink href={href} className={linkClasses} ref={ref} {...props}>
+        <LocalizedLink href={href} className={linkClasses} ref={ref} {...props}>
           {children}
-        </NextLink>
+        </LocalizedLink>
       );
     }
 

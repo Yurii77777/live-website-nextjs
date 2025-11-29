@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,6 +37,7 @@ export function CreatePageModal() {
     onSuccess: (newPage) => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PAGES });
       showToast.success(tMessages("pageCreated"));
+      // Use push to properly close modal and navigate
       router.push(ROUTES.ADMIN.EDITOR(newPage.slug));
     },
     onError: (error: Error) => {
@@ -70,11 +71,20 @@ export function CreatePageModal() {
           translateError={(key) => tMessages(key as any)}
         />
         <footer className="flex gap-2 justify-end">
-          <Button type="button" variant="ghost" onClick={() => router.back()}>
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => router.back()}
+            disabled={createPageMutation.isPending}
+          >
             {tCreate("cancel")}
           </Button>
-          <Button type="submit" variant="default">
-            {tCreate("create")}
+          <Button
+            type="submit"
+            variant="default"
+            disabled={createPageMutation.isPending}
+          >
+            {createPageMutation.isPending ? tMessages("creating") : tCreate("create")}
           </Button>
         </footer>
       </form>

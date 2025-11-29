@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter, Link } from "@/i18n/routing";
 import { useTranslations, useLocale } from "next-intl";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,6 @@ import { puckService } from "@/services/puck.service";
 import { ROUTES } from "@/constants/routes";
 import { QUERY_KEYS } from "@/constants/query-keys";
 import { PROTECTED_PAGES } from "@/constants/pages";
-import { showToast } from "@/lib/toast";
 import { translateError } from "@/helpers/translate-error";
 
 export default function AdminDashboard() {
@@ -20,7 +19,6 @@ export default function AdminDashboard() {
   const locale = useLocale();
 
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   const {
     data: pages = [],
@@ -29,25 +27,12 @@ export default function AdminDashboard() {
   } = useQuery<Page[]>({
     queryKey: QUERY_KEYS.PAGES,
     queryFn: puckService.getPages,
+    refetchOnMount: "always",
+    refetchOnWindowFocus: true,
   });
 
-  const deletePageMutation = useMutation({
-    mutationFn: puckService.deletePage,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PAGES });
-      showToast.success(tMessages("pageDeleted"));
-    },
-    onError: (error: Error) => {
-      showToast.error(translateError(error, tMessages));
-    },
-  });
-
-  async function handleDeletePage(slug: string) {
-    if (!confirm(t("deleteConfirm", { slug }))) {
-      return;
-    }
-
-    deletePageMutation.mutate(slug);
+  function handleDeletePage(slug: string) {
+    router.push(ROUTES.ADMIN.DELETE_PAGE(slug));
   }
 
   if (loading) {
@@ -82,7 +67,7 @@ export default function AdminDashboard() {
           <Button
             variant="default"
             size="sm"
-            className="bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"
+            className="bg-brand-gradient-text bg-clip-text text-transparent"
           >
             {t("createNewPage")}
           </Button>
@@ -112,7 +97,7 @@ export default function AdminDashboard() {
                     variant="ghost"
                     size="sm"
                     onClick={() => router.push(ROUTES.ADMIN.EDITOR(page.slug))}
-                    className="bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"
+                    className="bg-brand-gradient-text bg-clip-text text-transparent"
                   >
                     {t("edit")}
                   </Button>
@@ -122,7 +107,7 @@ export default function AdminDashboard() {
                     onClick={() =>
                       window.open(`/${locale}${ROUTES.PAGE(page.slug)}`, "_blank")
                     }
-                    className="bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"
+                    className="bg-brand-gradient-text bg-clip-text text-transparent"
                   >
                     {t("preview")}
                   </Button>
@@ -131,7 +116,7 @@ export default function AdminDashboard() {
                       variant="ghost"
                       size="sm"
                       onClick={() => handleDeletePage(page.slug)}
-                      className="bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"
+                      className="bg-brand-gradient-text bg-clip-text text-transparent"
                     >
                       {t("delete")}
                     </Button>

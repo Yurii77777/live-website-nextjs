@@ -6,6 +6,10 @@
     "pageNotFound": "Page Not Found"
   },
   "home": {},
+  "menu": {
+    "title": "Menu",
+    "notConfigured": "Menu not configured yet. Create a page with slug \"site-menu\" in the admin panel."
+  },
   "chat": {
     "placeholder": "Type a message...",
     "send": "Send",
@@ -48,6 +52,8 @@
       "create": "Create Page"
     },
     "messages": {
+      "creating": "Creating...",
+      "deleting": "Deleting...",
       "pageCreated": "Page created successfully!",
       "pageDeleted": "Page deleted successfully!",
       "pageSaved": "Page saved successfully!",

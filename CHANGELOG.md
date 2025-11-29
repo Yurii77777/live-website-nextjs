@@ -77,6 +77,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Auto-sync structure propagation when saving default locale (syncs to all other locales)
   - Structure synchronization helper that preserves existing translations while updating component layout
   - Localized UI Kit generator with separate translations for Ukrainian and English
+  - **Delete confirmation modal** - replaced browser `confirm()` with styled modal dialog
+  - Consistent design with CreatePageModal using BaseModal component
+  - Displays page title in confirmation message
+  - Localized buttons (Cancel/Delete) with loading states
+  - Intercepting route pattern: `@modal/(.)admin/delete-page/[slug]`
+  - Added ROUTES.ADMIN.DELETE_PAGE route constant
+  - Added "deleting" translation key for both UK and EN locales
+- **Parallel Routes default.tsx files** for proper modal navigation
+  - `@modal/admin/default.tsx`
+  - `@modal/admin/editor/default.tsx`
+  - `@modal/admin/editor/[slug]/default.tsx`
+  - `@modal/admin/delete-page/default.tsx`
+  - `@modal/admin/delete-page/[slug]/default.tsx`
+- **Helper functions module** - `helpers/localized-content.ts`
+  - `getLocalizedContent()` - retrieve content for specific locale
+  - `createEmptyLocalizedContent()` - create empty content for all locales
+  - `createLocalizedContent()` - wrapper for creating localized content
 
 ### Changed
 - Refactored chat components into dedicated `components/chat/` directory
@@ -106,6 +123,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Database seeding** - updated to generate localized content
   - UI Kit seeding creates content for both UK and EN locales
   - All seed scripts now support LocalizedPuckContent structure
+  - **Locale synchronization strategy** - now copies text from source locale instead of clearing
+  - Renamed `clearTextProps()` to `copyTextProps()` in sync-locale-structure.ts
+  - Users see default locale text as starting point for translation (e.g., "Контакти" → "Contacts")
+  - Improves UX: no more empty components when switching locales
+  - Faster translation workflow: edit existing text instead of typing from scratch
+- **Page update mechanism** - improved conditional field updates
+  - Title and published status only update when explicitly provided
+  - Created `PageUpdateData` interface to replace `any` type
+  - Used TypeScript `SQL` type for proper Drizzle ORM typing
+- **Admin dashboard** - removed browser confirm dialog
+  - Page deletion now opens styled modal instead of alert
+  - Better UX with consistent design system
+- **Editor publish workflow** - enhanced data freshness
+  - Added server data reload after successful publish
+  - Ensures all locales are synchronized from database
+  - Fixed stale data issues when switching between locales
+- **Admin page list** - automatic data refresh configuration
+  - Added `refetchOnMount: "always"` to React Query
+  - Added `refetchOnWindowFocus: true` for returning to dashboard
+  - Users always see up-to-date page status and timestamps
 
 ### Fixed
 - Chat form now properly handles validation errors without showing redundant messages
@@ -118,6 +155,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Seed scripts not generating localized content for UI components
 - Editor not showing same component structure when switching between languages
 - Hardcoded locale references replaced with dynamic configuration from i18n/routing
+- **Page publishing bug** - published status wasn't updating in database
+  - Fixed `onConflictDoUpdate` in page.service.ts to update `published` field
+  - Added `title` field update on conflict for consistency
+- **Modal closing issue** - create page modal stayed open after success
+  - Changed `router.replace()` to `router.push()` in CreatePageModal
+  - Added proper default.tsx routes for modal parallel routes
+  - Modal now automatically closes and navigates to editor
+- **Page title overwriting** - "configuration" suffix was being added
+  - Removed hardcoded `title: \`${slug} configuration\`` from PUT /api/puck/[slug]
+  - Title only updates when explicitly provided in PageUpsertData
+  - Original page titles now preserved during publish operations
 
 ### Removed
 - Removed redundant validation error messages for empty and too short messages (replaced with visual indicators)
