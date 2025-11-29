@@ -1,6 +1,7 @@
 import { pageService } from "@/services/db/page.service";
 import { seedConfig } from "@/configs/knowledge-base.config";
-import { createEmptyLocalizedContent } from "@/types/localized-content";
+import { PAGE_SLUGS } from "@/constants/pages";
+import { createEmptyLocalizedContent } from "@/helpers/localized-content";
 
 async function seedHomePage() {
   // Check if Home page seeding is enabled
@@ -16,7 +17,7 @@ async function seedHomePage() {
 
     console.log(`✅ Created empty localized page structure`);
 
-    const existingPage = await pageService.findBySlug("home");
+    const existingPage = await pageService.findBySlug(PAGE_SLUGS.HOME);
 
     // If seedIfMissing is true and page exists, skip
     if (seedConfig.pages.seedIfMissing && existingPage) {
@@ -27,7 +28,7 @@ async function seedHomePage() {
     if (existingPage) {
       console.log("🔄 Updating existing home page...");
 
-      await pageService.upsert("home", {
+      await pageService.upsert(PAGE_SLUGS.HOME, {
         title: "Головна",
         content: localizedContent,
         published: true,
@@ -38,7 +39,7 @@ async function seedHomePage() {
       console.log("📝 Creating new home page...");
 
       await pageService.create({
-        slug: "home",
+        slug: PAGE_SLUGS.HOME,
         title: "Головна",
         content: localizedContent,
         published: true,
@@ -47,8 +48,8 @@ async function seedHomePage() {
       console.log("✅ Home page created successfully!");
     }
 
-    console.log(`\n🌐 View at: /p/home`);
-    console.log(`📝 Edit at: /admin/editor/home`);
+    console.log(`\n🌐 View at: /p/${PAGE_SLUGS.HOME}`);
+    console.log(`📝 Edit at: /admin/editor/${PAGE_SLUGS.HOME}`);
   } catch (error) {
     console.error("❌ Error seeding Home page:", error);
     throw error;

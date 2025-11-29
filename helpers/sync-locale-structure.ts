@@ -15,13 +15,14 @@ export function syncLocaleStructure(
   const target = content[targetLocale];
 
   // If target is empty or has no content, copy entire structure from source
+  // Keep text from source so user can translate it
   if (!target || !target.content || target.content.length === 0) {
     return {
       ...content,
       [targetLocale]: {
         content: source.content.map(item => ({
           ...item,
-          props: clearTextProps(item.props),
+          props: copyTextProps(item.props),
         })),
         root: source.root,
       },
@@ -44,10 +45,11 @@ export function syncLocaleStructure(
         props: mergeProps(sourceItem.props, existingTarget.props),
       };
     } else {
-      // New component - copy structure but clear text fields
+      // New component - copy structure WITH text from source
+      // User can translate it manually
       return {
         ...sourceItem,
-        props: clearTextProps(sourceItem.props),
+        props: copyTextProps(sourceItem.props),
       };
     }
   });
@@ -62,20 +64,13 @@ export function syncLocaleStructure(
 }
 
 /**
- * Clear text fields from props but keep structure
+ * Copy text fields from source props (don't clear them)
+ * User can then translate the text manually
  */
-function clearTextProps(props: any): any {
+function copyTextProps(props: any): any {
   if (!props) return props;
 
-  const cleared = { ...props };
-  const textFields = ['text', 'title', 'description', 'label', 'placeholder'];
-
-  // Clear text fields
-  textFields.forEach(field => {
-    if (field in cleared && typeof cleared[field] === 'string') {
-      cleared[field] = '';
-    }
-  });
+  const copied = { ...props };
 
   // Handle nested slot content (like in Hero components)
   const slotFields = [
@@ -88,15 +83,15 @@ function clearTextProps(props: any): any {
   ];
 
   slotFields.forEach(field => {
-    if (Array.isArray(cleared[field])) {
-      cleared[field] = cleared[field].map((item: any) => ({
+    if (Array.isArray(copied[field])) {
+      copied[field] = copied[field].map((item: any) => ({
         ...item,
-        props: clearTextProps(item.props),
+        props: copyTextProps(item.props),
       }));
     }
   });
 
-  return cleared;
+  return copied;
 }
 
 /**
@@ -104,7 +99,7 @@ function clearTextProps(props: any): any {
  */
 function mergeProps(sourceProps: any, targetProps: any): any {
   if (!sourceProps) return targetProps;
-  if (!targetProps) return clearTextProps(sourceProps);
+  if (!targetProps) return copyTextProps(sourceProps);
 
   const merged = { ...sourceProps };
   const textFields = ['text', 'title', 'description', 'label', 'placeholder'];
@@ -140,14 +135,14 @@ function mergeProps(sourceProps: any, targetProps: any): any {
           }
           return {
             ...sourceItem,
-            props: clearTextProps(sourceItem.props),
+            props: copyTextProps(sourceItem.props),
           };
         });
       } else {
-        // No target content - clear text fields
+        // No target content - copy text from source
         merged[field] = sourceProps[field].map((item: any) => ({
           ...item,
-          props: clearTextProps(item.props),
+          props: copyTextProps(item.props),
         }));
       }
     }

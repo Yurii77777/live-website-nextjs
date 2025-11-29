@@ -6,6 +6,8 @@ import { Paragraph } from "@/components/ui/paragraph";
 import { Icon } from "@/components/ui/icon";
 import { HeroTwoColumn } from "@/components/ui/hero-two-column";
 import { HeroFlexibleGrid } from "@/components/ui/hero-flexible-grid";
+import { MenuItem } from "@/components/ui/menu-item";
+import { Navigation } from "@/components/ui/navigation";
 
 type Props = {
   Button: {
@@ -87,6 +89,34 @@ type Props = {
     columns?: "1-1" | "2-1" | "1-2";
     className?: string;
     containerClassName?: string;
+  };
+  MenuItem: {
+    id?: string;
+    label: string;
+    href: string;
+    icon?:
+      | "PhoneIcon"
+      | "MailIcon"
+      | "MapPinIcon"
+      | "GlobeIcon"
+      | "MessageCircleIcon"
+      | "SendIcon"
+      | "CalendarIcon"
+      | "ClockIcon"
+      | "DollarSignIcon"
+      | "CheckCircleIcon"
+      | "ArrowRightIcon"
+      | "ExternalLinkIcon"
+      | "ChevronRightIcon"
+      | "CircleArrowRightIcon"
+      | "MoveRightIcon";
+    className?: string;
+  };
+  Navigation: {
+    id?: string;
+    title?: string;
+    items: any[];
+    className?: string;
   };
 };
 
@@ -572,6 +602,75 @@ export const config: Config<Props> = {
             className={className}
             containerClassName={containerClassName}
           />
+        );
+      },
+    },
+    MenuItem: {
+      fields: {
+        label: { type: "text", label: "Label" },
+        href: {
+          type: "text",
+          label: "URL (e.g., 'contacts', '/p/about', 'https://...', or '/')",
+        },
+        icon: {
+          type: "select",
+          label: "Icon",
+          options: [
+            { label: "None", value: "" },
+            { label: "Phone", value: "PhoneIcon" },
+            { label: "Mail", value: "MailIcon" },
+            { label: "Map Pin", value: "MapPinIcon" },
+            { label: "Globe", value: "GlobeIcon" },
+            { label: "Message Circle", value: "MessageCircleIcon" },
+            { label: "Send", value: "SendIcon" },
+            { label: "Calendar", value: "CalendarIcon" },
+            { label: "Clock", value: "ClockIcon" },
+            { label: "Dollar Sign", value: "DollarSignIcon" },
+            { label: "Check Circle", value: "CheckCircleIcon" },
+            { label: "Arrow Right", value: "ArrowRightIcon" },
+            { label: "External Link", value: "ExternalLinkIcon" },
+            { label: "Chevron Right", value: "ChevronRightIcon" },
+            { label: "Circle Arrow Right", value: "CircleArrowRightIcon" },
+            { label: "Move Right", value: "MoveRightIcon" },
+          ],
+        },
+        className: { type: "text", label: "Custom Classes (Tailwind)" },
+      },
+      defaultProps: {
+        label: "Menu Item",
+        href: "/",
+        className: "",
+      },
+      render: ({ label, href, icon, className }) => {
+        return (
+          <MenuItem
+            label={label}
+            href={href}
+            icon={icon || undefined}
+            className={className}
+          />
+        );
+      },
+    },
+    Navigation: {
+      fields: {
+        title: { type: "text", label: "Navigation Title" },
+        items: {
+          type: "slot",
+          label: "Menu Items",
+        },
+        className: { type: "text", label: "Custom Classes (Tailwind)" },
+      },
+      defaultProps: {
+        title: "",
+        items: [],
+        className: "",
+      },
+      render: ({ title, items: Items, className }) => {
+        return (
+          <Navigation title={title || undefined} className={className}>
+            <Items />
+          </Navigation>
         );
       },
     },

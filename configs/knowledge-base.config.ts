@@ -16,6 +16,7 @@ export const seedConfig = {
   pages: {
     uiKit: true,      // Seed UI Kit page
     home: true,       // Seed home page
+    siteMenu: true,   // Seed site menu page
     // Only seed if page doesn't exist (recommended for pages)
     seedIfMissing: true,
   },
