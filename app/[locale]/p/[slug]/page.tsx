@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { pageService } from "@/services/db/page.service";
+import { pageService } from "@/services/page.service";
 import { PuckRenderer } from "@/components/puck-renderer";
 import type { Metadata } from "next";
 import { generatePageMetadata } from "@/lib/metadata";

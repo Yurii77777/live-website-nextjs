@@ -1,5 +1,5 @@
 import { Chat } from "@/components/chat";
-import { pageService } from "@/services/db/page.service";
+import { pageService } from "@/services/page.service";
 import { PuckRenderer } from "@/components/puck-renderer";
 
 export default async function Home() {
@@ -11,7 +11,9 @@ export default async function Home() {
       <section className="flex-1 overflow-hidden w-full max-w-[1280px] mx-auto">
         <Chat
           initialContent={
-            hasContent ? <PuckRenderer data={homePage.content as any} /> : undefined
+            hasContent ? (
+              <PuckRenderer data={homePage.content as any} />
+            ) : undefined
           }
         />
       </section>
