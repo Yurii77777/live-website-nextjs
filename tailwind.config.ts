@@ -10,6 +10,52 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        // Display sizes (for hero sections, main headings)
+        "display-2xl": ["4.5rem", { lineHeight: "1.1", letterSpacing: "-0.02em" }], // 72px
+        "display-xl": ["3.75rem", { lineHeight: "1.1", letterSpacing: "-0.02em" }], // 60px
+        "display-lg": ["3rem", { lineHeight: "1.2", letterSpacing: "-0.02em" }], // 48px
+        "display-md": ["2.25rem", { lineHeight: "1.2", letterSpacing: "-0.01em" }], // 36px
+        "display-sm": ["1.875rem", { lineHeight: "1.3", letterSpacing: "-0.01em" }], // 30px
+
+        // Text sizes (for body text, UI elements)
+        xl: ["1.25rem", { lineHeight: "1.5" }], // 20px
+        lg: ["1.125rem", { lineHeight: "1.5" }], // 18px
+        base: ["1rem", { lineHeight: "1.5" }], // 16px
+        sm: ["0.875rem", { lineHeight: "1.5" }], // 14px
+        xs: ["0.75rem", { lineHeight: "1.5" }], // 12px
+      },
+      fontWeight: {
+        light: "300",
+        normal: "400",
+        medium: "500",
+        semibold: "600",
+        bold: "700",
+        extrabold: "800",
+      },
+      fontFamily: {
+        sans: [
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica Neue",
+          "Arial",
+          "sans-serif",
+        ],
+        mono: [
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "Monaco",
+          "Consolas",
+          "Liberation Mono",
+          "Courier New",
+          "monospace",
+        ],
+      },
       borderRadius: {
         lg: "0.5rem",
         md: "calc(0.5rem - 2px)",

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { pageService } from "@/services/db/page.service";
+import { pageService } from "@/services/page.service";
 
 export async function generatePageMetadata(
   locale: string,

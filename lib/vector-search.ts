@@ -1,4 +1,4 @@
-import { knowledgeBaseService } from "@/services/db/knowledge-base.service";
+import { knowledgeBaseService } from "@/services/knowledge-base.service";
 import { embed } from "ai";
 import { embeddingModel } from "@/lib/ai";
 import { AI_CONFIG } from "@/constants/ai";
@@ -55,13 +55,16 @@ export async function getRelevantContext(query: string): Promise<string> {
 
   const context = allResults
     .map((result, index) => {
-      const source = index < systemComponents.length
-        ? `[System Component ${index + 1}]`
-        : `[Source ${index + 1 - systemComponents.length}] (relevance: ${(result.similarity * 100).toFixed(1)}%)`;
+      const source =
+        index < systemComponents.length
+          ? `[System Component ${index + 1}]`
+          : `[Source ${index + 1 - systemComponents.length}] (relevance: ${(result.similarity * 100).toFixed(1)}%)`;
       return `${source}\n${result.content}`;
     })
     .join("\n\n---\n\n");
 
-  console.info(`[kb] context length=${context.length} (system=${systemComponents.length}, content=${contentResults.length})`);
+  console.info(
+    `[kb] context length=${context.length} (system=${systemComponents.length}, content=${contentResults.length})`
+  );
   return context;
 }

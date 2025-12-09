@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { pageService } from "@/services/db/page.service";
+import { pageService } from "@/services/page.service";
 import { PROTECTED_PAGES } from "@/constants/pages";
 import { createEmptyLocalizedContent } from "@/helpers/localized-content";
 import { PuckParams } from "@/app/api/types/puck.types";

@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -41,6 +42,7 @@ export function SiteMenu() {
       <SheetContent side="left" className="w-[300px] sm:w-[400px]">
         <SheetHeader>
           <SheetTitle>{t("title")}</SheetTitle>
+          <SheetDescription>{t("description")}</SheetDescription>
         </SheetHeader>
         <div className="mt-6" onClick={handleMenuItemClick}>
           {menuData ? (

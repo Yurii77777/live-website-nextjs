@@ -1,4 +1,5 @@
-import { knowledgeBaseService } from "@/services/db/knowledge-base.service";
+import "dotenv/config";
+import { knowledgeBaseService } from "@/services/knowledge-base.service";
 import { embed } from "ai";
 import { embeddingModel } from "@/lib/ai";
 import { knowledgeBaseConfig } from "@/configs/knowledge-base.config";
@@ -91,7 +92,10 @@ async function seedKnowledgeBase() {
     content = getCategoriesContent(options.only);
     categoryInfo = `Categories: ${options.only.join(", ")}`;
   } else if (options.skip.length > 0) {
-    const enabledCategories = { ...knowledgeBaseConfig.enabled } as Record<CategoryKey, boolean>;
+    const enabledCategories = { ...knowledgeBaseConfig.enabled } as Record<
+      CategoryKey,
+      boolean
+    >;
     options.skip.forEach((cat) => {
       enabledCategories[cat] = false;
     });

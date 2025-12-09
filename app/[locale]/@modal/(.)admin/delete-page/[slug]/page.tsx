@@ -1,6 +1,6 @@
 import { BaseModal } from "@/components/modals/base-modal";
 import { ConfirmDeleteModal } from "@/components/modals/confirm-delete-modal";
-import { pageService } from "@/services/db/page.service";
+import { pageService } from "@/services/page.service";
 import { notFound } from "next/navigation";
 
 interface DeletePageModalProps {
