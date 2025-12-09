@@ -1,4 +1,5 @@
-import { pageService } from "@/services/db/page.service";
+import "dotenv/config";
+import { pageService } from "@/services/page.service";
 import * as path from "path";
 import { generateUIKitContent } from "./generators/puck-content-generator";
 import { seedConfig } from "@/configs/knowledge-base.config";
@@ -29,13 +30,17 @@ async function seedUIKit() {
       en: enData,
     };
 
-    console.log(`✅ Generated content with ${ukData.content.length} items (UK) and ${enData.content.length} items (EN)`);
+    console.log(
+      `✅ Generated content with ${ukData.content.length} items (UK) and ${enData.content.length} items (EN)`
+    );
 
     const existingPage = await pageService.findBySlug(PAGE_SLUGS.UI_KIT);
 
     // If seedIfMissing is true and page exists, skip
     if (seedConfig.pages.seedIfMissing && existingPage) {
-      console.log("⏭️  UI Kit page already exists, skipping (seedIfMissing: true)");
+      console.log(
+        "⏭️  UI Kit page already exists, skipping (seedIfMissing: true)"
+      );
       return;
     }
 

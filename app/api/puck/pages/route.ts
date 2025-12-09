@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { pageService } from "@/services/db/page.service";
+import { pageService } from "@/services/page.service";
 import { createEmptyLocalizedContent } from "@/helpers/localized-content";
 
 export async function GET() {

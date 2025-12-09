@@ -1,4 +1,5 @@
-import { pageService } from "@/services/db/page.service";
+import "dotenv/config";
+import { pageService } from "@/services/page.service";
 import { seedConfig } from "@/configs/knowledge-base.config";
 import { PAGE_SLUGS } from "@/constants/pages";
 import { createEmptyLocalizedContent } from "@/helpers/localized-content";
@@ -21,7 +22,9 @@ async function seedHomePage() {
 
     // If seedIfMissing is true and page exists, skip
     if (seedConfig.pages.seedIfMissing && existingPage) {
-      console.log("⏭️  Home page already exists, skipping (seedIfMissing: true)");
+      console.log(
+        "⏭️  Home page already exists, skipping (seedIfMissing: true)"
+      );
       return;
     }
 

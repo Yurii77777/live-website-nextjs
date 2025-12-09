@@ -22,20 +22,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-
-### Changed
-
-### Fixed
-
-### Removed
-
-### BREAKING CHANGES
-
-### Docs
-
-## [Unreleased]
-
-### Added
 - AI-powered website builder with streaming chat interface supporting multi-provider models (OpenAI, Google)
 - Visual page editor using Puck Editor with drag-and-drop UI components
 - Admin dashboard for page management (create, edit, delete, preview pages)
@@ -94,6 +80,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `getLocalizedContent()` - retrieve content for specific locale
   - `createEmptyLocalizedContent()` - create empty content for all locales
   - `createLocalizedContent()` - wrapper for creating localized content
+  - **Authentication System** - integrated better-auth with passkey support
+  - Login and signup pages with React Hook Form and Zod validation
+  - Email/password authentication with bcrypt hashing
+  - Passkey (WebAuthn) authentication for passwordless login
+  - Protected routes middleware with session cookie verification
+  - First admin auto-role assignment for initial user
+  - User redirection middleware (login → signup if no users exist)
+  - Security settings page for passkey management
+- **Auth Components** - reusable form components
+  - SignUpForm component with validation error handling
+  - SignInForm component with optional passkey fallback
+  - Auth error translation helper (`translateError`)
+  - Passkey availability hook (`usePasskeyAvailability`)
+- **React Query Integration** - state management for auth operations
+  - Sign up mutation with success/error handling
+  - Sign in mutation (email/password and passkey)
+  - `hasUsers` query with middleware integration
+  - Global retry configuration in QueryClient
+- **Auth Services** - centralized authentication logic
+  - `authService.signUpWithEmail()` - user registration with role assignment
+  - `authService.signInWithEmail()` - email/password login
+  - `authService.signInWithPasskey()` - WebAuthn authentication
+  - `authService.hasUsers()` - check system initialization state
+  - Passkey CRUD operations (register, list, delete)
 
 ### Changed
 - Refactored chat components into dedicated `components/chat/` directory
